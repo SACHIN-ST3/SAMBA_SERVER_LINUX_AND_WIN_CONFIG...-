@@ -28,22 +28,19 @@ We’ll do this in **three parts**:
 
 #### **1️⃣ Install Samba packages**
 
-<span style="color:orange;">⚠️ Note:</span> This is an orange-colored note text.
-
-<span style="color:orange;">⚠️ Note:</span>
-<span style="color:green;"> **NOTE:</span>** For RHEL / CentOS / Fedora 
+> **NOTE:** For RHEL / CentOS / Fedora 
 ```
-yum install samba samba-client samba-common \-y
+yum install samba samba-client samba-common -y
 ```
 #### **2️⃣ Create a directory to share**
 ```
-mkdir \-p /srv/samba/shared
+mkdir -p /srv/samba/shared
 ```
 
 #### **3️⃣ Set proper permissions**
 ```
-chmod \-R 0777 /srv/samba/shared  
-chown \-R nobody:nobody /srv/samba/shared
+chmod -R 0777 /srv/samba/shared  
+chown -R nobody:nobody /srv/samba/shared
 ```
 *(In production, give limited permissions instead of 777.)*
 
@@ -57,13 +54,13 @@ vi /etc/samba/smb.conf
 At the **end of the file**,
 add:
 ```
-\[SharedFolder\]  
-   comment \= Public Share  
-   path \= /srv/samba/shared  
-   browseable \= yes  
-   writable \= yes  
-   guest ok \= yes  
-   read only \= no
+[SharedFolder]  
+   comment = Public Share  
+   path = /srv/samba/shared  
+   browseable = yes  
+   writable = yes  
+   guest ok = yes  
+   read only = no
 ```
 >👉 **NOTE:** This creates a **public share** named `SharedFolder`.
 
@@ -79,8 +76,8 @@ systemctl status smb nmb
 
 #### **6️⃣ Allow Samba through firewall**
 
-firewall-cmd \--permanent \--add-service=samba  
-firewall-cmd \--reload
+firewall-cmd --permanent --add-service=samba  
+firewall-cmd --reload
 
 ---
 
@@ -101,7 +98,7 @@ From the **client Linux machine**:
 mkdir /mnt/samba
 ```
 ```
-mount \-t cifs //192.168.1.100/SharedFolder /mnt/samba \-o guest
+mount -t cifs //192.168.1.100/SharedFolder /mnt/samba -o guest
 ```
 >**NOTE***(Replace `192.168.1.100` with your Samba server IP.)*
 
@@ -114,7 +111,7 @@ ls /mnt/samba
 
 Add this line to `/etc/fstab` on the client:
 ```
-//192.168.1.100/SharedFolder /mnt/samba cifs guest,\_netdev 0 0
+//192.168.1.100/SharedFolder /mnt/samba cifs guest,_netdev 0 0
 ```
 Then mount:
 ```
@@ -126,7 +123,7 @@ mount -a
 
 #### **🪟 Step-by-Step:**
 
-Press **Windows \+ R → type**
+Press **Windows + R → type**
 ```
  \\192.168.1.100\\SharedFolder
 ```
@@ -166,12 +163,12 @@ Add to Samba password database:
 
 Edit `/etc/samba/smb.conf`:
 
- \[SecureShare\]  
-   comment \= Secured Share  
-   path \= /srv/samba/secure  
-   valid users \= sambauser  
-   guest ok \= no  
-   writable \= yes
+ [SecureShare]  
+   comment = Secured Share  
+   path = /srv/samba/secure  
+   valid users = sambauser  
+   guest ok = no  
+   writable = yes
 
 3. 
 
@@ -186,7 +183,7 @@ Restart service:
 
 On Linux:
 ```
- mount \-t cifs //192.168.1.100/SecureShare /mnt/samba \-o username=sambauser
+ mount -t cifs //192.168.1.100/SecureShare /mnt/samba \-o username=sambauser
 ```
 * 
 
@@ -194,8 +191,8 @@ On Linux:
 
 ## **🧾 Summary Table**
 
-| Action               | Command/Step |
-| -----|                 | ----- |
+| Action | Command/Step |
+| ----- | ----- |
 | Install Samba | `yum install samba samba-client -y` |
 | Start Services | `systemctl enable --now smb nmb` |
 | Add Share | Edit `/etc/samba/smb.conf` |
@@ -206,5 +203,3 @@ On Linux:
 
 ---
 
-
-# SAMBA_SERVER_LINUX_AND_WIN_CONFIG 
