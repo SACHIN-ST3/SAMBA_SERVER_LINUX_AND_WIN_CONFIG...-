@@ -102,7 +102,8 @@ mount -t cifs //192.168.1.100/SharedFolder /mnt/samba -o guest
 ```
 >**NOTE***(Replace `192.168.1.100` with your Samba server IP.)*
 
->**NOTE**To check:
+
+>**NOTE**   To check:
 ```
 df -h | grep samba  
 ls /mnt/samba
