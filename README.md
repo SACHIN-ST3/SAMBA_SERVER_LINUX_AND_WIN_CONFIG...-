@@ -31,8 +31,10 @@ We’ll do this in **three parts**:
 <p style="background-color:#fff3cd; padding:10px; border-left:5px solid #ffecb5;">
 ⚠️ <b>Note:</b> This is a custom yellow highlight note in Markdown using HTML.
 </p>
+<span style="color:orange;">⚠️ Note:</span> This is an orange-colored note text.
 
-> **NOTE:**\# For RHEL / CentOS / Fedora <
+
+> **NOTE:**\# For RHEL / CentOS / Fedora 
 ```
 yum install samba samba-client samba-common \-y
 ```
