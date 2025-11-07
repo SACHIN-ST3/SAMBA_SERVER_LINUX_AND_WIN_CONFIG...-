@@ -27,6 +27,7 @@ We’ll do this in **three parts**:
 ### **🧩 Part 1 — Setup Samba Server (on Linux)**
 
 #### **1️⃣ Install Samba packages**
+
 <p style="background-color:#fff3cd; padding:10px; border-left:5px solid #ffecb5;">
 ⚠️ <b>Note:</b> This is a custom yellow highlight note in Markdown using HTML.
 </p>
@@ -88,7 +89,7 @@ firewall-cmd \--reload
 
 testparm
 
-✅ It should show “Loaded services file OK”.
+> **NOTE->**✅ It should show “Loaded services file OK”.
 
 ---
 
@@ -97,27 +98,29 @@ testparm
 #### **🧭 Option 1: Temporary Mount (manual)**
 
 From the **client Linux machine**:
-
-mkdir /mnt/samba  
+```
+mkdir /mnt/samba
+```
+```
 mount \-t cifs //192.168.1.100/SharedFolder /mnt/samba \-o guest
+```
+>**NOTE***(Replace `192.168.1.100` with your Samba server IP.)*
 
-*(Replace `192.168.1.100` with your Samba server IP.)*
-
-To check:
-
-df \-h | grep samba  
+>**NOTE**To check:
+```
+df -h | grep samba  
 ls /mnt/samba
-
+```
 #### **🧭 Option 2: Permanent Mount (automatic)**
 
 Add this line to `/etc/fstab` on the client:
-
+```
 //192.168.1.100/SharedFolder /mnt/samba cifs guest,\_netdev 0 0
-
+```
 Then mount:
-
-mount \-a
-
+```
+mount -a
+```
 ---
 
 ### **🧩 Part 3 — Access Samba Share from Windows**
@@ -125,9 +128,9 @@ mount \-a
 #### **🪟 Step-by-Step:**
 
 Press **Windows \+ R → type**
-
- \\\\192.168.1.100\\SharedFolder
-
+```
+ \\192.168.1.100\\SharedFolder
+```
 1.   
 2. Press **Enter** → You should see the folder open.
 
@@ -150,16 +153,16 @@ Press **Windows \+ R → type**
 If you want **user-based access**, do this instead of `guest ok = yes`.
 
 Create a Linux user:
-
- useradd sambauser  
+```
+useradd sambauser  
 passwd sambauser
-
+```
 1. 
 
 Add to Samba password database:
-
- smbpasswd \-a sambauser
-
+```
+ smbpasswd -a sambauser
+```
 2. 
 
 Edit `/etc/samba/smb.conf`:
@@ -174,26 +177,26 @@ Edit `/etc/samba/smb.conf`:
 3. 
 
 Restart service:
-
- systemctl restart smb
-
+```
+ systemctl restart smb nmb
+```
 4.   
 5. Access using username/password:
 
    * On Windows: enter `sambauser` and password when prompted.
 
 On Linux:
-
+```
  mount \-t cifs //192.168.1.100/SecureShare /mnt/samba \-o username=sambauser
-
+```
 * 
 
 ---
 
 ## **🧾 Summary Table**
 
-| Action | Command/Step |
-| ----- | ----- |
+| Action               | Command/Step |
+| -----|                 | ----- |
 | Install Samba | `yum install samba samba-client -y` |
 | Start Services | `systemctl enable --now smb nmb` |
 | Add Share | Edit `/etc/samba/smb.conf` |
