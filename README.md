@@ -124,11 +124,10 @@ mount -a
 
 #### **🪟 Step-by-Step:**
 
-Press **Windows + R → type**
+1. Press **Windows + R → type**
 ```
  \\192.168.1.100\\SharedFolder
 ```
-1.   
 2. Press **Enter** → You should see the folder open.
 
 3. You can **map it as a network drive**:
